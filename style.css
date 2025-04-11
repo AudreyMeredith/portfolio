@@ -1,7 +1,158 @@
+  
 body {
-    /* Set line height to 1.5 times the font size
-         and use the OS’s UI font as the website font
-       */
+
     font: 100%/1.5 system-ui;
+    max-width: 100ch;
+    margin-inline: auto;
+    padding: 1rem;
+}
+
+
+nav ul,
+nav li {
+    display: contents;
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-between; 
+    margin-bottom: 1rem;
+    border-bottom: 1px solid oklch(80% 3% 200); 
+    padding-bottom: 0.5em;
+}
+
+
+nav a {
+    flex: 1; 
+    text-align: center;
+    padding: 0.5em;
+    text-decoration: none;
+    color: inherit;
+}
+
+  html {
+    --color-accent: oklch(65% 50% 0);
+    accent-color: var(--color-accent);
   }
+
+
+nav a:hover {
+    background-color: var(--color-accent); 
+    border-bottom: 0.4em solid var(--color-accent); 
+    padding-bottom: 0.1em;
+  }
+
+
+nav a.current {
+    background-color: var(--color-accent); 
+    border-bottom: 0.4em solid var(--color-accent); 
+    padding-bottom: 0.1em;
+
+  }
+
+
+form {
+    display: grid;
+    grid-template-columns: auto 1fr; 
+    gap: 1em;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+
+form label {
+    display: grid;
+    grid-template-columns: subgrid; 
+    grid-column: 1 / -1; 
+    align-items: center;
+    gap: 0.5em; 
+    font-weight: bold;
+}
+
+form input,
+form textarea {
+    font: inherit; 
+    width: 100%;
+    box-sizing: border-box; 
+    padding: 0.5em; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+
+
+form textarea {
+    resize: vertical;
+}
+
+
+form button {
+    grid-column: 1 / -1; 
+    justify-self: start; 
+    padding: 0.5em 1em;
+    background-color: oklch(80% 3% 200); 
+    border: none;
+    border-radius: 4px;
+    font: inherit;
+    cursor: pointer;
+}
+
+
+form button:hover {
+    background-color: oklch(75% 3% 200); 
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); 
+    grid-template-rows: subgrid; 
+    gap: 1em; 
+  }
+  
+
+  .projects article {
+    display: grid; 
+    grid-template-rows: subgrid; 
+    grid-row: span 3; 
+    background-color: #f9f9f9; 
+    padding: 1em; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  }
+  
+
+  .projects h2 {
+    margin: 0; 
+    line-height: 1.2; 
+  }
+  
+
+  .projects img {
+    max-width: 100%; 
+    height: auto; 
+  }
+  
+  .projects p {
+    font-size: 0.9em; 
+  }
+  
+
+h1 {
+    font-size: 4rem; 
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+h2, h3, h4, h5, h6 {
+    line-height: 1.1;
+    text-wrap: balance; 
+}
+
+
+h2 {
+    font-size: 2rem; 
+}
+
+
+
   
