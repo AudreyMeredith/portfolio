@@ -116,3 +116,72 @@ form?.addEventListener('submit', (event) => {
   location.href = url;
 });
 
+export async function fetchJSON(url) {
+    try {
+      // Fetch the JSON file from the given URL
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch projects: ${response.statusText}`);
+      }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+      console.error('Error fetching or parsing JSON data:', error);
+    }
+  }
+
+  export function renderProjects(projects, containerElement, headingLevel = 'h2') {
+    // Step 1: Validate input
+    if (!Array.isArray(projects)) {
+      console.error('renderProjects: projects must be an array');
+      return;
+    }
+  
+    if (!(containerElement instanceof HTMLElement)) {
+      console.error('renderProjects: containerElement must be a valid DOM element');
+      return;
+    }
+  
+    // Optional: Validate headingLevel is a proper h1–h6 tag
+    const validHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+    if (!validHeadings.includes(headingLevel)) {
+      console.warn(`Invalid heading level "${headingLevel}". Defaulting to h2.`);
+      headingLevel = 'h2';
+    }
+  
+    // Step 2: Clear container to avoid duplicates
+    containerElement.innerHTML = '';
+  
+    // Step 3–5: Loop and create each article
+    projects.forEach(project => {
+      const article = document.createElement('article');
+  
+      // Fallbacks for missing data
+      const title = project.title || 'Untitled Project';
+      const image = project.image || 'https://via.placeholder.com/300x200?text=No+Image';
+      const description = project.description || 'No description available.';
+  
+      // Step 4: Use dynamic heading + insert content
+      article.innerHTML = `
+        <${headingLevel}>${title}</${headingLevel}>
+        <img src="${image}" alt="${title}" loading="lazy">
+        <p>${description}</p>
+      `;
+  
+      // Step 5: Append to container
+      containerElement.appendChild(article);
+    });
+  
+    // Step 6: Handle empty array
+    if (projects.length === 0) {
+      const placeholder = document.createElement('p');
+      placeholder.textContent = 'No projects to display.';
+      placeholder.style.fontStyle = 'italic';
+      containerElement.appendChild(placeholder);
+    }
+  }
+  
+  export async function fetchGitHubData(username) {
+    // return statement here
+    return fetchJSON(`https://api.github.com/users/${username}`);
+  }
