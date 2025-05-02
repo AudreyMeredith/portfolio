@@ -6,39 +6,46 @@
 import { fetchJSON, renderProjects } from '../global.js';
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Load and render projects
-  const projects = await fetchJSON('../lib/projects.json');
-  const projectsContainer = document.querySelector('.projects');
-  const titleElement = document.querySelector('.projects-title');
+const projects = await fetchJSON('../lib/projects.json');
+const projectsContainer = document.querySelector('.projects');
+const titleElement = document.querySelector('.projects-title');
+renderProjects(projects, projectsContainer, 'h2');
+if (titleElement) {
+  titleElement.textContent = `Projects (${projects.length})`;
+}
 
-  renderProjects(projects, projectsContainer, 'h2');
+// === PIE CHART + LEGEND ===
 
-  if (titleElement) {
-    titleElement.textContent = `Projects (${projects.length})`;
-  }
+const data = [
+  { value: 1, label: 'Apples' },
+  { value: 2, label: 'Oranges' },
+  { value: 3, label: 'Mangos' },
+  { value: 4, label: 'Pears' },
+  { value: 5, label: 'Limes' },
+  { value: 5, label: 'Cherries' },
+];
 
-  // === PIE CHART ===
-  const svg = d3.select('#projects-pie-plot');
-  if (!svg.node()) {
-    console.error('SVG element with id "projects-pie-plot" not found.');
-    return;
-  }
+const svg = d3.select('#projects-pie-plot');
+const arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
+const sliceGenerator = d3.pie().value(d => d.value);
+const arcData = sliceGenerator(data);
+const colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-  const data = [1, 2, 3, 4, 5, 5];
+// Draw pie chart
+svg.selectAll('path')
+  .data(arcData)
+  .enter()
+  .append('path')
+  .attr('d', arcGenerator)
+  .attr('fill', (d, i) => colors(i));
 
-  const arcGenerator = d3.arc()
-    .innerRadius(0)
-    .outerRadius(50);
+// Create legend
+const legend = d3.select('.legend');
 
-  const sliceGenerator = d3.pie();
-  const arcData = sliceGenerator(data);
-  const colors = d3.scaleOrdinal(d3.schemeTableau10);
-
-  svg.selectAll('path')
-    .data(arcData)
-    .enter()
-    .append('path')
-    .attr('d', arcGenerator)
-    .attr('fill', (d, i) => colors(i));
+data.forEach((d, idx) => {
+  legend.append('li')
+    .attr('class', 'legend-item')
+    .attr('style', `--color: ${colors(idx)}`)
+    .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`);
 });
+
