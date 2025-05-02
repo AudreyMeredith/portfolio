@@ -3,33 +3,32 @@
 // const projectsContainer = document.querySelector('.projects');
 // renderProjects(projects, projectsContainer, 'h2');
 
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 import { fetchJSON, renderProjects } from '../global.js';
 
-const projects = await fetchJSON('../lib/projects.json');
-const projectsContainer = document.querySelector('.projects');
-const titleElement = document.querySelector('.projects-title'); // selects the <h1>
+document.addEventListener('DOMContentLoaded', async () => {
+  // Fetch and render projects
+  const projects = await fetchJSON('../lib/projects.json');
+  const projectsContainer = document.querySelector('.projects');
+  const titleElement = document.querySelector('.projects-title');
+  renderProjects(projects, projectsContainer, 'h2');
 
-renderProjects(projects, projectsContainer, 'h2');
+  if (titleElement) {
+    titleElement.textContent = `Projects (${projects.length})`;
+  }
 
-if (titleElement) {
-  titleElement.textContent = `Projects (${projects.length})`;
-}
+  // Pie chart rendering
+  const data = [1, 2, 3, 4, 5, 5];
 
-import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
-
-// 🛠 FIX: Wait until DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  let data = [1, 2, 3, 4, 5, 5];
-
-  let arcGenerator = d3.arc()
+  const arcGenerator = d3.arc()
     .innerRadius(0)
     .outerRadius(50);
 
-  let sliceGenerator = d3.pie();
-  let arcData = sliceGenerator(data);
-  let arcs = arcData.map(d => arcGenerator(d));
+  const sliceGenerator = d3.pie();
+  const arcData = sliceGenerator(data);
+  const arcs = arcData.map(d => arcGenerator(d));
 
-  let colors = d3.scaleOrdinal(d3.schemeTableau10);
+  const colors = d3.scaleOrdinal(d3.schemeTableau10);
 
   arcs.forEach((arc, idx) => {
     d3.select('#projects-pie-plot')
@@ -38,5 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .attr('fill', colors(idx));
   });
 });
+
 
 
