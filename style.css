@@ -194,3 +194,15 @@ nav {
   margin: 0;
   grid-row: 2;
 }
+
+.project-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.project-year {
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+}
