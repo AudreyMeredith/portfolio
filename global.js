@@ -163,10 +163,14 @@ export async function fetchJSON(url) {
   
       // Step 4: Use dynamic heading + insert content
       article.innerHTML = `
-        <${headingLevel}>${title}</${headingLevel}>
-        <img src="${image}" alt="${title}" loading="lazy">
+      <${headingLevel}>${title}</${headingLevel}>
+      <img src="${image}" alt="${title}" loading="lazy">
+      <div class="project-text">
         <p>${description}</p>
-      `;
+        <p class="project-year">${project.year || ''}</p>
+      </div>
+    `;
+    
   
       // Step 5: Append to container
       containerElement.appendChild(article);
