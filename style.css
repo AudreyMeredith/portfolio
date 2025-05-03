@@ -222,6 +222,10 @@ nav {
   overflow: visible;
 }
 
+#projects-pie-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
 /* Responsive legend grid */
 .legend {
   display: grid;
@@ -249,4 +253,17 @@ nav {
   aspect-ratio: 1 / 1;
   background-color: var(--color);
   border-radius: 0.25em;
+}
+
+.selected {
+  --color: oklch(60% 45% 0) !important;
+}
+.selected:is(path) {
+  fill: var(--color);
+}
+
+
+path {
+  transition: 300ms;
+  cursor: pointer;
 }
