@@ -15,12 +15,15 @@ let selectedIndex = -1;
 let filteredBySearch = allProjects;
 let pieChartData = [];
 
-// === Get selected year from pie chart data ===
+// ✅ Define fixed color scale for consistent year colors
+const yearColorScale = d3.scaleOrdinal()
+  .domain(['2023', '2024', '2025']) // Update with all years used in your data
+  .range(d3.schemeTableau10);
+
 function getSelectedYearLabel() {
   return pieChartData[selectedIndex]?.label ?? null;
 }
 
-// === Filter projects by search and selected year ===
 function getFilteredProjects(projects) {
   const selectedLabel = getSelectedYearLabel();
   return projects.filter(project => {
@@ -28,28 +31,27 @@ function getFilteredProjects(projects) {
       .join('\n')
       .toLowerCase()
       .includes(query.toLowerCase());
-
     const matchesYear = selectedLabel ? project.year == selectedLabel : true;
     return matchesQuery && matchesYear;
   });
 }
 
-// === Main update function to render projects and chart ===
 function update(filteredProjects) {
   renderProjects(filteredProjects, projectsContainer, 'h2');
   if (titleElement) {
     titleElement.textContent = `Projects (${filteredProjects.length})`;
   }
-  renderPieChart(filteredProjects);
+
+  // ✅ Always show full pie chart (not filtered)
+  renderPieChart(allProjects);
 }
 
-// === Render pie chart and legend ===
 function renderPieChart(projectsGiven) {
   const svg = d3.select('#projects-pie-plot');
   const legend = d3.select('.legend');
 
-  svg.selectAll('path').remove(); // optional if using full enter/update/exit
-  legend.selectAll('li').remove();
+  svg.selectAll('*').remove();  // Clear all previous SVG content
+  legend.selectAll('*').remove();
 
   const rolledData = d3.rollups(
     projectsGiven,
@@ -63,55 +65,45 @@ function renderPieChart(projectsGiven) {
   }));
 
   const arcGenerator = d3.arc().innerRadius(0).outerRadius(50);
-  const sliceGenerator = d3.pie().value(d => d.value);
-  const arcData = sliceGenerator(pieChartData);
-  const colors = d3.scaleOrdinal(d3.schemeTableau10);
+  const pieGenerator = d3.pie().value(d => d.value);
+  const arcData = pieGenerator(pieChartData);
 
-  // ✅ ENTER/UPDATE/EXIT pattern for pie slices
-  const paths = svg.selectAll('path')
-  .data(arcData, d => d.data.label);
+  const selectedYear = getSelectedYearLabel();
+  const hasSelection = selectedYear !== null;
+  svg.attr('data-selected', hasSelection ? 'true' : null);
 
-paths.exit().remove();
+  // Draw pie wedges
+  svg.selectAll('path')
+    .data(arcData)
+    .enter()
+    .append('path')
+    .attr('d', arcGenerator)
+    .attr('fill', d => yearColorScale(d.data.label)) // ✅ persistent color
+    .attr('class', d => selectedYear === d.data.label ? 'selected' : '')
+    .on('click', (event, d) => {
+      const clickedYear = d.data.label;
+      selectedIndex = selectedYear === clickedYear ? -1 : pieChartData.findIndex(p => p.label === clickedYear);
+      const filtered = getFilteredProjects(filteredBySearch);
+      update(filtered);
+    });
 
-paths.enter()
-  .append('path')
-  .merge(paths)
-  .attr('d', arcGenerator)
-  .attr('fill', d => colors(d.index)) // ✅ FIXED LINE HERE
-  .attr('class', d => getSelectedYearLabel() === d.data.label ? 'selected' : '')
-  .on('click', (event, d) => {
-    const clickedYear = d.data.label;
-    if (getSelectedYearLabel() === clickedYear) {
-      selectedIndex = -1;
-    } else {
-      selectedIndex = pieChartData.findIndex(p => p.label === clickedYear);
-    }
-    const filtered = getFilteredProjects(filteredBySearch);
-    update(filtered);
-  });
-
-
-  // Legend
+  // Draw legend
   legend.selectAll('li')
     .data(pieChartData)
     .enter()
     .append('li')
-    .attr('class', d => `legend-item ${getSelectedYearLabel() === d.label ? 'selected' : ''}`)
-    .attr('style', (_, i) => `--color: ${colors(i)}`)
-    .html(d => `<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
+    .attr('class', d => `legend-item ${selectedYear === d.label ? 'selected' : ''}`)
+    .attr('style', d => `--color: ${yearColorScale(d.label)}`)
+    .html(d => `<span class="swatch" style="background:${yearColorScale(d.label)}"></span> ${d.label} <em>(${d.value})</em>`)
     .on('click', (_, i) => {
       const clickedYear = pieChartData[i].label;
-      if (getSelectedYearLabel() === clickedYear) {
-        selectedIndex = -1;
-      } else {
-        selectedIndex = i;
-      }
+      selectedIndex = selectedYear === clickedYear ? -1 : i;
       const filtered = getFilteredProjects(filteredBySearch);
       update(filtered);
     });
 }
 
-// === Search handler ===
+// SEARCH BAR
 searchInput.addEventListener('input', event => {
   query = event.target.value;
   selectedIndex = -1;
@@ -123,7 +115,6 @@ searchInput.addEventListener('input', event => {
   update(filtered);
 });
 
-// === Initial load ===
+// Initial render
 filteredBySearch = allProjects;
 update(allProjects);
-

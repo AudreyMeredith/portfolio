@@ -1,170 +1,159 @@
-  
+/* Base layout and typography */
 body {
-
-    font: 100%/1.5 system-ui;
-    max-width: 100ch;
-    margin-inline: auto;
-    padding: 1rem;
+  font: 100%/1.5 system-ui;
+  max-width: 100ch;
+  margin-inline: auto;
+  padding: 1rem;
 }
 
+html {
+  --color-accent: oklch(65% 50% 0);
+  accent-color: var(--color-accent);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid oklch(80% 3% 200);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  --border-color: oklch(50% 10% 200 / 40%);
+  border-bottom: 1px solid var(--border-color);
+}
 
 nav ul,
 nav li {
-    display: contents;
+  display: contents;
 }
-
-
-nav {
-    display: flex;
-    justify-content: space-between; 
-    margin-bottom: 1rem;
-    border-bottom: 1px solid oklch(80% 3% 200); 
-    padding-bottom: 0.5em;
-}
-
 
 nav a {
-    flex: 1; 
-    text-align: center;
-    padding: 0.5em;
-    text-decoration: none;
-    color: inherit;
+  flex: 1;
+  text-align: center;
+  padding: 0.5em;
+  text-decoration: none;
+  color: inherit;
 }
-
-  html {
-    --color-accent: oklch(65% 50% 0);
-    accent-color: var(--color-accent);
-  }
-
 
 nav a:hover {
-    /* background-color: var(--color-accent);  */
-    background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
-    border-bottom: 0.4em solid var(--color-accent); 
-    padding-bottom: 0.1em;
-  }
-
-
-nav a.current {
-    background-color: var(--color-accent); 
-    border-bottom: 0.4em solid var(--color-accent); 
-    padding-bottom: 0.1em;
-
-  }
-
-
-form {
-    display: grid;
-    grid-template-columns: auto 1fr; 
-    gap: 1em;
-    max-width: 600px;
-    margin: 0 auto;
+  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
+  border-bottom: 0.4em solid var(--color-accent);
+  padding-bottom: 0.1em;
 }
 
+nav a.current {
+  background-color: var(--color-accent);
+  border-bottom: 0.4em solid var(--color-accent);
+  padding-bottom: 0.1em;
+}
+
+/* Form layout */
+form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+  max-width: 600px;
+  margin: 0 auto;
+}
 
 form label {
-    display: grid;
-    grid-template-columns: subgrid; 
-    grid-column: 1 / -1; 
-    align-items: center;
-    gap: 0.5em; 
-    font-weight: bold;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: bold;
 }
 
 form input,
 form textarea {
-    font: inherit; 
-    width: 100%;
-    box-sizing: border-box; 
-    padding: 0.5em; 
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
+  font: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
-
 
 form textarea {
-    resize: vertical;
+  resize: vertical;
 }
-
 
 form button {
-    grid-column: 1 / -1; 
-    justify-self: start; 
-    padding: 0.5em 1em;
-    background-color: oklch(80% 3% 200); 
-    border: none;
-    border-radius: 4px;
-    font: inherit;
-    cursor: pointer;
+  grid-column: 1 / -1;
+  justify-self: start;
+  padding: 0.5em 1em;
+  background-color: oklch(80% 3% 200);
+  border: none;
+  border-radius: 4px;
+  font: inherit;
+  cursor: pointer;
 }
-
 
 form button:hover {
-    background-color: oklch(75% 3% 200); 
+  background-color: oklch(75% 3% 200);
 }
 
+/* Projects grid */
 .projects {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr)); 
-    grid-template-rows: subgrid; 
-    gap: 1em; 
-  }
-  
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  grid-template-rows: subgrid;
+  gap: 1em;
+}
 
-  .projects article {
-    display: grid; 
-    grid-template-rows: subgrid; 
-    grid-row: span 3; 
-    background-color: #f9f9f9; 
-    padding: 1em; 
-    border-radius: 8px; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-  }
-  
+.projects article {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  background-color: #f9f9f9;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  .projects h2 {
-    margin: 0; 
-    line-height: 1.2; 
-  }
-  
+.projects h2 {
+  margin: 0;
+  line-height: 1.2;
+}
 
-  .projects img {
-    max-width: 100%; 
-    height: auto; 
-  }
-  
-  .projects p {
-    font-size: 0.9em; 
-  }
-  
+.projects img {
+  max-width: 100%;
+  height: auto;
+}
 
+.projects p {
+  font-size: 0.9em;
+}
+
+.project-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.project-year {
+  font-size: 0.875rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Headings */
 h1 {
-    font-size: 4rem; 
-    line-height: 1.1;
-    margin-bottom: 1rem;
+  font-size: 4rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
 }
 
 h2, h3, h4, h5, h6 {
-    line-height: 1.1;
-    text-wrap: balance; 
+  line-height: 1.1;
+  text-wrap: balance;
 }
-
 
 h2 {
-    font-size: 2rem; 
+  font-size: 2rem;
 }
 
-:root {
-  color-scheme: light dark;
-}
-
-nav {
-  --border-color: oklch(50% 10% 200 / 40%);
-  /* ... other styles and nested rules ... */
-  border-bottom: 1px solid var(--border-color);
-  padding: 1rem;
-}
-
+/* Theme selector */
 .color-scheme {
   position: absolute;
   top: 1rem;
@@ -178,6 +167,7 @@ nav {
   font-family: inherit;
 }
 
+/* GitHub stats */
 #profile-stats dl {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -195,19 +185,7 @@ nav {
   grid-row: 2;
 }
 
-.project-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.project-year {
-  font-size: 0.875rem;
-  color: #666;
-  font-style: italic;
-}
-
-/* Container layout: pie chart + legend side-by-side */
+/* Pie chart + legend container */
 .container {
   display: flex;
   align-items: flex-start;
@@ -215,18 +193,36 @@ nav {
   margin-block: 2em;
 }
 
-/* Pie chart stays at a fixed size */
 #projects-pie-plot {
   max-width: 20em;
   flex-shrink: 0;
   overflow: visible;
 }
 
+/* PIE CHART STYLING — ✅ FIXED VERSION */
+
+/* Smooth transition and pointer cursor for wedges */
+#projects-pie-plot path {
+  transition: opacity 300ms;
+  cursor: pointer;
+}
+
+/* Hover effect: fade out other wedges */
 #projects-pie-plot:has(path:hover) path:not(:hover) {
   opacity: 0.5;
 }
 
-/* Responsive legend grid */
+/* Selection effect: fade unselected wedges */
+#projects-pie-plot[data-selected] path:not(.selected) {
+  opacity: 0.3;
+}
+
+/* Keep selected wedge at full opacity */
+#projects-pie-plot[data-selected] path.selected {
+  opacity: 1;
+}
+
+/* Legend layout */
 .legend {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
@@ -238,14 +234,13 @@ nav {
   flex: 1;
 }
 
-/* Each legend item with a swatch and label */
 .legend-item {
   display: flex;
   align-items: center;
   gap: 0.5em;
 }
 
-/* Color swatch */
+/* Color swatch in legend */
 .legend-item .swatch {
   display: inline-block;
   width: 1em;
@@ -255,15 +250,3 @@ nav {
   border-radius: 0.25em;
 }
 
-.selected {
-  --color: oklch(60% 45% 0) !important;
-}
-.selected:is(path) {
-  fill: var(--color);
-}
-
-
-path {
-  transition: 300ms;
-  cursor: pointer;
-}
