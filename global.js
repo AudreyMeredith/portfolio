@@ -12,12 +12,14 @@ function $$(selector, context = document) {
 // currentLink?.classList.add('current');
 
 let pages = [
-    { url: '', title: 'Home' },
-    { url: 'projects/', title: 'Projects' },
-    { url: 'contact/', title: 'Contact' },
-    { url: 'resume.html', title: 'Resume' },
-    { url: 'https://github.com/AudreyMeredith', title: 'GitHub' }
-  ];
+  { url: '', title: 'Home' },
+  { url: 'projects/', title: 'Projects' },
+  { url: 'contact/', title: 'Contact' },
+  { url: 'meta/', title: 'Meta' }, // ✅ Add this line
+  { url: 'resume.html', title: 'Resume' },
+  { url: 'https://github.com/AudreyMeredith', title: 'GitHub' }
+];
+
 
 let nav = document.createElement('nav');
 document.body.prepend(nav);
