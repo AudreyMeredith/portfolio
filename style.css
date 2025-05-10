@@ -250,3 +250,31 @@ h2 {
   border-radius: 0.25em;
 }
 
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem 2rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.stats dt {
+  font-size: 0.75rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.stats dd {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #000;
+}
+
