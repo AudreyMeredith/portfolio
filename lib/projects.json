@@ -68,7 +68,7 @@
 	{
 		"title": "Boston Bike Traffic Visualization",
 		"year": "2025",
-		"image": "boston_bike_traffic.png",
+		"image": "lib/boston_bike_traffic.png",
 		"description": "An interactive map showing bike lane coverage, Bluebike station traffic, and filtering by neighborhood using D3 and Mapbox."
 	  }
 	  
