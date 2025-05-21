@@ -15,7 +15,7 @@ let pages = [
   { url: '', title: 'Home' },
   { url: 'projects/', title: 'Projects' },
   { url: 'contact/', title: 'Contact' },
-  { url: 'meta/', title: 'Meta' }, // ✅ Add this line
+  { url: 'meta/', title: 'Meta' }, // 
   { url: 'resume.html', title: 'Resume' },
   { url: 'https://github.com/AudreyMeredith', title: 'GitHub' }
 ];

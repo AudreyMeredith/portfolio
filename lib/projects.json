@@ -66,9 +66,10 @@
 		"description": "Quos, recusandae, sit rerum velit nostrum nihil quisquam tempora repellat sed quibusdam facilis. Assumenda quaerat ab, nesciunt odio facere sit, ipsa necessitatibus tempora, maiores commodi sed quae provident deserunt at?"
 	},
 	{
-		"title": "Github Project",
-		"year": "2024",
-		"image": "https://vis-society.github.io/labs/2/images/empty.svg",
-		"description": "Tempore, eveniet minus velit, earum aperiam necessitatibus repellendus provident accusamus illum officiis doloribus, eum saepe est aut numquam distinctio pariatur natus totam repellat. Numquam nulla libero sapiente magnam nostrum ex."
-	}
+		"title": "Boston Bike Traffic Visualization",
+		"year": "2025",
+		"image": "boston_bike_traffic.png",
+		"description": "An interactive map showing bike lane coverage, Bluebike station traffic, and filtering by neighborhood using D3 and Mapbox."
+	  }
+	  
 ]
