@@ -347,3 +347,43 @@ circle.selected {
   stroke-width: 1.5;
 }
 
+#files {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+#files > div {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.line {
+  display: flex;
+  width: 0.5em;
+  aspect-ratio: 1;
+  background: var(--color);
+  border-radius: 50%;
+}
+
+.step {
+  padding-bottom: 4rem;
+  min-height: 60vh;
+}
+
+.step.is-active {
+  background-color: #f0f8ff;
+  border-left: 4px solid var(--color-accent);
+  padding-left: 1rem;
+}
+
+@media (max-width: 768px) {
+  #scrolly-1 {
+    flex-direction: column;
+  }
+
+  #scatter-plot {
+    position: relative;
+    height: auto;
+  }
+}
