@@ -1,5 +1,30 @@
 /* Meta page enhanced style.css */
 
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  padding: 1rem;
+  border-bottom: 1px solid var(--shadow-color);
+  background-color: var(--background-color);
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+nav a.current {
+  border-bottom: 3px solid var(--color-accent);
+  padding-bottom: 0.25em;
+}
+
 :root {
   --color-accent: oklch(65% 0.3 280);
   --color-accent-opp: oklch(70% 0.2 280);
